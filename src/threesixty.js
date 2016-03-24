@@ -417,6 +417,7 @@
           AppConfig.dragging = true;
           AppConfig.onDragStart(AppConfig.currentFrame);
         } else if (event.type === 'touchmove') {
+          event.stopPropagation();
           base.trackPointer(event);
         } else if (event.type === 'touchend') {
           AppConfig.dragging = false;
