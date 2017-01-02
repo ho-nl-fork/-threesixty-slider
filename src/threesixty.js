@@ -481,13 +481,13 @@
           if(AppConfig.pointerDistance > 1){
             AppConfig.speedFrameCounter++;
             if(AppConfig.speedFrameCounter >= AppConfig.speedFrameLimiter) {
-              AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+              AppConfig.endFrame = AppConfig.currentFrame - Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
               AppConfig.speedFrameCounter = 0;
             }
           }else{
             AppConfig.speedFrameCounter++;
             if(AppConfig.speedFrameCounter >= AppConfig.speedFrameLimiter) {
-              AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+              AppConfig.endFrame = AppConfig.currentFrame - Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
               AppConfig.speedFrameCounter = 0;
             }
           }
