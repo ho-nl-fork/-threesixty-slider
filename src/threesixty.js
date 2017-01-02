@@ -478,10 +478,18 @@
         AppConfig.pointerEndPosX = base.getPointerEvent(event).pageX;
         if (AppConfig.monitorStartTime < new Date().getTime() - AppConfig.monitorInt) {
           AppConfig.pointerDistance = AppConfig.pointerEndPosX - AppConfig.pointerStartPosX;
-          if(AppConfig.pointerDistance > 0){
-          AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+          if(AppConfig.pointerDistance > 1){
+            AppConfig.speedFrameCounter++;
+            if(AppConfig.speedFrameCounter >= AppConfig.speedFrameLimiter) {
+              AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+              AppConfig.speedFrameCounter = 0;
+            }
           }else{
-          AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+            AppConfig.speedFrameCounter++;
+            if(AppConfig.speedFrameCounter >= AppConfig.speedFrameLimiter) {
+              AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+              AppConfig.speedFrameCounter = 0;
+            }
           }
 
           if( AppConfig.disableWrap ) {
@@ -706,6 +714,19 @@
        * This property controls the sensitivity for the 360 slider
        */
       speedMultiplier: 7,
+
+      /**
+       * @cfg {Number} speedMultiplier
+       * Set the sensitivity even lower by skipping nummber of scroll actions
+       */
+      speedFrameLimiter : 1,
+
+      /**
+       * @cfg {Number} loadedImages
+       * Private property contains frame speed counter
+       */
+      speedFrameCounter: 0,
+
       /**
        * @cfg {Number} totalFrames
        * Set total number for frames used in the 360 rotation
